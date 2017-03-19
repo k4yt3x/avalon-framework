@@ -9,12 +9,12 @@ class avalon():
 		YP   YP    YP    YP   YP Y88888P  `Y88P'  VP   V8P
 
 
-		Name: Avalon Color Framework
-			(K4YT3X Color Standard)
+		Name: Avalon Framework
+			(K4YT3X I/O Standard)
 		Author: K4T
 		Date: 3/18/17
 
-		Version: 1.0
+		Version: 1.1
 	"""
 
 	# Console colors
@@ -39,7 +39,7 @@ class avalon():
 		LB = '\033[94m'  # Light Blue
 		LM = '\033[95m'  # Light Magenta
 		LC = '\033[96m'  # Light Cyan
-		WT = '\033[97m'  # White
+		W = '\033[97m'  # White
 
 	class BG():
 		"""
@@ -86,13 +86,13 @@ class avalon():
 	def info(msg):
 		print(avalon.FG.G + '[+] INFO: ' + str(msg) + avalon.FG.W)
 
-	def tInfo(msg):
+	def timeInfo(msg):
 		import datetime
 		print(avalon.FG.W + str(datetime.datetime.now()) + avalon.FG.G + ' [+] INFO: ' + str(msg) + avalon.FG.W)
 
-	def subLevelInfo(msg):
+	def subLevelTimeInfo(msg):
 		import datetime
-		print(avalon.FG.W + str(datetime.datetime.now()) + avalon.FG.GR + ' [+] INFO: ' + str(msg) + avalon.FG.W)
+		print(avalon.FG.DG + str(datetime.datetime.now()) + ' [+] INFO: ' + str(msg) + avalon.FG.W)
 
 	def warning(msg):
 		print(avalon.FG.Y + avalon.FM.BD + '[!] WARNING: ' + str(msg) + avalon.FG.W)
@@ -101,10 +101,10 @@ class avalon():
 		print(avalon.FG.R + avalon.FM.BD + '[!] ERROR: ' + str(msg) + avalon.FG.W)
 
 	def debug(msg):
-		print(avalon.FG.R + avalon.FM.BD + '[*] DBG: ' + str(msg) + avalon.FG.W)
+		print(avalon.FG.R + avalon.FM.RDM + '[*] DBG: ' + str(msg) + avalon.FG.W)
 
 	def input(msg):
-		res = input(avalon.FG.Y + avalon.FM.BD + '[?] USER: ' + avalon.FG.msg + avalon.FG.W)
+		res = input(avalon.FG.Y + avalon.FM.BD + '[?] USER: ' + msg + avalon.FG.W)
 		return res
 
 	def ask(msg, default=False):
