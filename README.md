@@ -11,4 +11,4 @@
 
 #
 ### Screenshots
-![avalon](https://cloud.githubusercontent.com/assets/21986859/24077297/f602274a-0c1e-11e7-9362-8a92ff50aca2.png)
+![avalon](https://cloud.githubusercontent.com/assets/21986859/24077542/cfdbe5bc-0c26-11e7-992e-7e81e8ddd02b.png)
