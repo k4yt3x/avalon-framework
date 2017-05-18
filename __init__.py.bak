@@ -88,33 +88,33 @@ class FM():
 
 
 def info(msg):
-    print((FG.G + '[+] INFO: ' + str(msg) + FM.RST))
+    print(FG.G + '[+] INFO: ' + str(msg) + FM.RST)
 
 
 def timeInfo(msg):
     import datetime
-    print((FM.RST + str(datetime.datetime.now()) + FG.G + ' [+] INFO: ' + str(msg) + FM.RST))
+    print(FM.RST + str(datetime.datetime.now()) + FG.G + ' [+] INFO: ' + str(msg) + FM.RST)
 
 
 def subLevelTimeInfo(msg):
     import datetime
-    print((FG.DG + str(datetime.datetime.now()) + ' [+] INFO: ' + str(msg) + FM.RST))
+    print(FG.DG + str(datetime.datetime.now()) + ' [+] INFO: ' + str(msg) + FM.RST)
 
 
 def warning(msg):
-    print((FG.Y + FM.BD + '[!] WARNING: ' + str(msg) + FM.RST))
+    print(FG.Y + FM.BD + '[!] WARNING: ' + str(msg) + FM.RST)
 
 
 def error(msg):
-    print((FG.R + FM.BD + '[!] ERROR: ' + str(msg) + FM.RST))
+    print(FG.R + FM.BD + '[!] ERROR: ' + str(msg) + FM.RST)
 
 
 def debug(msg):
-    print((FG.R + FM.RDM + '[*] DBG: ' + str(msg) + FM.RST))
+    print(FG.R + FM.RDM + '[*] DBG: ' + str(msg) + FM.RST)
 
 
 def gets(msg):
-    res = eval(input(FG.Y + FM.BD + '[?] USER: ' + msg + FM.RST))
+    res = input(FG.Y + FM.BD + '[?] USER: ' + msg + FM.RST)
     return res
 
 
