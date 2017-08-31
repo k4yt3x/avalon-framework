@@ -14,8 +14,9 @@ Licensed under the GNU Lesser General Public License Version 3 (GNU LGPL v3),
     available at: https://www.gnu.org/licenses/lgpl-3.0.txt
 
 (C) 2017 K4YT3X
-Version: 1.4
 """
+
+VERSION = '1.5'
 
 
 class FG():
@@ -51,8 +52,8 @@ class BG():
     B = '\033[44m'  # Blue
     M = '\033[45m'  # Magenta
     C = '\033[46m'  # Cyan
-    LG = '\033[47m'  # Light Grey
-    DG = '\033[100m'  # Dark Grey
+    LGR = '\033[47m'  # Light Grey
+    DGR = '\033[100m'  # Dark Grey
     LR = '\033[101m'  # Light Red
     LG = '\033[102m'  # Light Green
     LY = '\033[103m'  # Light Yellow
@@ -102,8 +103,17 @@ def warning(msg):
     print(FG.Y + FM.BD + '[!] WARNING: ' + str(msg) + FM.RST)
 
 
-def error(msg):
-    print(FG.R + FM.BD + '[!] ERROR: ' + str(msg) + FM.RST)
+def error(msg, style='LINE'):
+    if style.upper() == 'BANNER':
+        import shutil
+        width, height = shutil.get_terminal_size((80, 20))
+        topBottomBar = FG.R + (((width - len(' ERROR ')) // 2) * '#') + ' ERROR ' + (((width - len(' ERROR ')) // 2) * '#')
+        print('\n' + topBottomBar + FM.RST + '\n')
+        spaces = ((width - len(str(msg))) // 2) * ' '
+        print(FG.R + FM.BD + spaces + str(msg) + spaces + FM.RST)
+        print('\n' + topBottomBar + FM.RST + '\n')
+    else:
+        print(FG.R + FM.BD + '[!] ERROR: ' + str(msg) + FM.RST)
 
 
 def debug(msg):
