@@ -16,7 +16,7 @@ Licensed under the GNU Lesser General Public License Version 3 (GNU LGPL v3),
 (C) 2017 K4YT3X
 """
 
-VERSION = '1.5'
+VERSION = '1.5.1'
 
 
 class FG():
@@ -96,7 +96,7 @@ def timeInfo(msg):
 
 def subLevelTimeInfo(msg):
     import datetime
-    print(FG.DG + str(datetime.datetime.now()) + ' [+] INFO: ' + str(msg) + FM.RST)
+    print(FG.DGR + str(datetime.datetime.now()) + ' [+] INFO: ' + str(msg) + FM.RST)
 
 
 def warning(msg):
