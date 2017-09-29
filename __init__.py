@@ -15,8 +15,10 @@ Licensed under the GNU Lesser General Public License Version 3 (GNU LGPL v3),
 
 (C) 2017 K4YT3X
 """
+from __future__ import print_function
 
-VERSION = '1.5.1'
+
+VERSION = '1.5.3'
 
 
 class FG():
@@ -151,5 +153,6 @@ def ask(msg, default=False):
 def sequencePrint(msg):
     import time
     for word in str(msg):
-        print(word)
+        print(word, end="")
         time.sleep(0.05)
+    print()
