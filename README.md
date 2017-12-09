@@ -19,3 +19,15 @@ if avalon.ask("Question?", True):  # Default is True
 ### Screenshots
 This is how it looks like:
 ![avlaon_framework](https://user-images.githubusercontent.com/21986859/31029604-56f3a1ec-a520-11e7-94fd-361ff9a43ed3.png)
+
+
+### Usages Examples
+~~~~
+import avalon_framework as avalon
+
+avalon.info("Output green information here")
+avalon.warning("This outputs yellow bold warnings")
+avalon.error("This prints a red bold error")
+avalon.subLevelTimeInfo("This prints detailed time and grey info")
+avalon.ask("Returns true if user selects y, vice versa")
+~~~~
