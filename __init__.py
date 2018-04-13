@@ -16,53 +16,57 @@ Licensed under the GNU Lesser General Public License Version 3 (GNU LGPL v3),
 (C) 2017 K4YT3X
 """
 from __future__ import print_function
+import sys
 
+if sys.platform == 'win32':
+    from colorama import init
+    init()
 
-VERSION = '1.5.3'
+VERSION = '1.5.4'
 
 
 class FG():
     """
         Foreground Color
     """
-    BL = '\033[30m'   # Black
-    R = '\033[31m'    # Red
-    G = '\033[32m'    # Green
-    Y = '\033[33m'    # Yellow
-    B = '\033[34m'    # Blue
-    M = '\033[35m'    # Magenta
-    C = '\033[36m'    # Cyan
+    BL = '\033[30m'  # Black
+    R = '\033[31m'  # Red
+    G = '\033[32m'  # Green
+    Y = '\033[33m'  # Yellow
+    B = '\033[34m'  # Blue
+    M = '\033[35m'  # Magenta
+    C = '\033[36m'  # Cyan
     LGR = '\033[37m'  # Light Grey
     DGR = '\033[90m'  # Dark Grey
-    LR = '\033[91m'   # Light Red
-    LG = '\033[92m'   # Light Green
-    LY = '\033[93m'   # Light Yellow
-    LB = '\033[94m'   # Light Blue
-    LM = '\033[95m'   # Light Magenta
-    LC = '\033[96m'   # Light Cyan
-    W = '\033[97m'    # White
+    LR = '\033[91m'  # Light Red
+    LG = '\033[92m'  # Light Green
+    LY = '\033[93m'  # Light Yellow
+    LB = '\033[94m'  # Light Blue
+    LM = '\033[95m'  # Light Magenta
+    LC = '\033[96m'  # Light Cyan
+    W = '\033[97m'  # White
 
 
 class BG():
     """
         Background Color
     """
-    BL = '\033[40m'    # Black
-    R = '\033[41m'     # Red
-    G = '\033[42m'     # Green
-    Y = '\033[43m'     # Yellow
-    B = '\033[44m'     # Blue
-    M = '\033[45m'     # Magenta
-    C = '\033[46m'     # Cyan
-    LGR = '\033[47m'   # Light Grey
+    BL = '\033[40m'  # Black
+    R = '\033[41m'  # Red
+    G = '\033[42m'  # Green
+    Y = '\033[43m'  # Yellow
+    B = '\033[44m'  # Blue
+    M = '\033[45m'  # Magenta
+    C = '\033[46m'  # Cyan
+    LGR = '\033[47m'  # Light Grey
     DGR = '\033[100m'  # Dark Grey
-    LR = '\033[101m'   # Light Red
-    LG = '\033[102m'   # Light Green
-    LY = '\033[103m'   # Light Yellow
-    LB = '\033[104m'   # Light Blue
-    LM = '\033[105m'   # Light Magenta
-    LC = '\033[106m'   # Light Cyan
-    WT = '\033[107m'   # White
+    LR = '\033[101m'  # Light Red
+    LG = '\033[102m'  # Light Green
+    LY = '\033[103m'  # Light Yellow
+    LB = '\033[104m'  # Light Blue
+    LM = '\033[105m'  # Light Magenta
+    LC = '\033[106m'  # Light Cyan
+    WT = '\033[107m'  # White
 
 
 class FM():
@@ -78,7 +82,7 @@ class FM():
     HD = '\033[8m'  # Hidden
 
     # RESET
-    RST = '\033[0m'   # Reset ALL
+    RST = '\033[0m'  # Reset ALL
     RBD = '\033[21m'  # Bold
     RDM = '\033[22m'  # Dim
     RUN = '\033[24m'  # Underlined
@@ -96,7 +100,7 @@ def timeInfo(msg):
     print(FM.RST + str(datetime.datetime.now()) + FG.G + ' [+] INFO: ' + str(msg) + FM.RST)
 
 
-def subLevelTimeInfo(msg):
+def dbgInfo(msg):
     import datetime
     print(FG.DGR + str(datetime.datetime.now()) + ' [+] INFO: ' + str(msg) + FM.RST)
 
