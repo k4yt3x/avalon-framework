@@ -1,5 +1,10 @@
 # Avalon Framework
 
+## 1.6.1 (October 19, 2018)
+
+1. Logging is enabled by default for error and debug.
+1. Changed method names to match the Python naming convention.
+
 ## 1.6.0 (October 18, 2018)
 
 1. Restructured the project.
