@@ -10,7 +10,7 @@ and foreground colors.
 Name: Avalon Framework
 Author: K4T
 Date Created: March 20, 2017
-Last Modified: October 18, 2018
+Last Modified: October 19, 2018
 
 Licensed under the GNU Lesser General Public License Version 3 (GNU LGPL v3),
     available at: https://www.gnu.org/licenses/lgpl-3.0.txt
@@ -24,7 +24,7 @@ if sys.platform == 'win32':
     from colorama import init
     init()
 
-VERSION = '1.6.0'
+VERSION = '1.6.1'
 
 
 class Avalon:
@@ -97,13 +97,13 @@ class Avalon:
         if log:
             syslog.syslog(syslog.LOG_INFO, msg)
 
-    def timeInfo(msg, log=False):
+    def time_info(msg, log=False):
         import datetime
         print('{}{}{} [+] INFO: {}{}'.format(Avalon.FM.RST, str(datetime.datetime.now()), Avalon.FG.G, str(msg), Avalon.FM.RST))
         if log:
             syslog.syslog(syslog.LOG_INFO, msg)
 
-    def dbgInfo(msg, log=False):
+    def debug_info(msg, log=True):
         import datetime
         print('{}{} [+] INFO: {}{}'.format(Avalon.FG.DGR, str(datetime.datetime.now()), str(msg), Avalon.FM.RST), file=sys.stderr)
         if log:
@@ -114,12 +114,12 @@ class Avalon:
         if log:
             syslog.syslog(syslog.LOG_WARNING, msg)
 
-    def error(msg, log=False):
+    def error(msg, log=True):
         print('{}{}[!] ERROR: {}{}'.format(Avalon.FG.R, Avalon.FM.BD, str(msg), Avalon.FM.RST), file=sys.stderr)
         if log:
             syslog.syslog(syslog.LOG_WARNING, msg)
 
-    def debug(msg, log=False):
+    def debug(msg, log=True):
         print('{}{}[*] DBG: {}{}'.format(Avalon.FG.R, Avalon.FM.RDM, str(msg), Avalon.FM.RST), file=sys.stderr)
         if log:
             syslog.syslog(syslog.LOG_DEBUG, msg)
