@@ -18,13 +18,14 @@ Licensed under the GNU Lesser General Public License Version 3 (GNU LGPL v3),
 (C) 2017 - 2018 K4YT3X
 """
 import sys
-import syslog
 
 if sys.platform == 'win32':
     from colorama import init
     init()
+else:
+    import syslog
 
-VERSION = '1.6.1'
+VERSION = '1.6.2'
 
 
 class Avalon:
@@ -94,34 +95,34 @@ class Avalon:
 
     def info(msg, log=False):
         print('{}[+] INFO: {}{}'.format(Avalon.FG.G, str(msg), Avalon.FM.RST))
-        if log:
+        if log and sys.platform != 'win32':
             syslog.syslog(syslog.LOG_INFO, msg)
 
     def time_info(msg, log=False):
         import datetime
         print('{}{}{} [+] INFO: {}{}'.format(Avalon.FM.RST, str(datetime.datetime.now()), Avalon.FG.G, str(msg), Avalon.FM.RST))
-        if log:
+        if log and sys.platform != 'win32':
             syslog.syslog(syslog.LOG_INFO, msg)
 
     def debug_info(msg, log=True):
         import datetime
         print('{}{} [+] INFO: {}{}'.format(Avalon.FG.DGR, str(datetime.datetime.now()), str(msg), Avalon.FM.RST), file=sys.stderr)
-        if log:
+        if log and sys.platform != 'win32':
             syslog.syslog(syslog.LOG_DEBUG, msg)
 
     def warning(msg, log=False):
         print('{}{}[!] WARNING: {}{}'.format(Avalon.FG.Y, Avalon.FM.BD, str(msg), Avalon.FM.RST), file=sys.stderr)
-        if log:
+        if log and sys.platform != 'win32':
             syslog.syslog(syslog.LOG_WARNING, msg)
 
     def error(msg, log=True):
         print('{}{}[!] ERROR: {}{}'.format(Avalon.FG.R, Avalon.FM.BD, str(msg), Avalon.FM.RST), file=sys.stderr)
-        if log:
+        if log and sys.platform != 'win32':
             syslog.syslog(syslog.LOG_WARNING, msg)
 
     def debug(msg, log=True):
         print('{}{}[*] DBG: {}{}'.format(Avalon.FG.R, Avalon.FM.RDM, str(msg), Avalon.FM.RST), file=sys.stderr)
-        if log:
+        if log and sys.platform != 'win32':
             syslog.syslog(syslog.LOG_DEBUG, msg)
 
     def gets(msg):
