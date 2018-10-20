@@ -1,5 +1,9 @@
 # Avalon Framework
 
+## 1.6.2 (October 19, 2018)
+
+1. Fixed Windows compatibility.
+
 ## 1.6.1 (October 19, 2018)
 
 1. Logging is enabled by default for error and debug.
