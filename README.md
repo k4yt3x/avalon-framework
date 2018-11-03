@@ -41,11 +41,11 @@ This is how it looks like:
 
 ### Usages Examples (To be Updated)
 ~~~~
-import avalon_framework as avalon
+from avalon_framework as Avalon
 
 Avalon.info("Output green information here")
 Avalon.warning("This outputs yellow bold warnings")
 Avalon.error("This prints a red bold error")
-Avalon.subLevelTimeInfo("This prints detailed time and grey info")
+Avalon.debug_info("This prints debug info and logs it to syslog")
 Avalon.ask("Returns true if user selects y, vice versa")
 ~~~~
