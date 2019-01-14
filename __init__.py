@@ -15,8 +15,9 @@ Last Modified: October 19, 2018
 Licensed under the GNU Lesser General Public License Version 3 (GNU LGPL v3),
     available at: https://www.gnu.org/licenses/lgpl-3.0.txt
 
-(C) 2017 - 2018 K4YT3X
+(C) 2017 - 2019 K4YT3X
 """
+from datetime import datetime
 import sys
 
 if sys.platform == 'win32':
@@ -25,10 +26,27 @@ if sys.platform == 'win32':
 else:
     import syslog
 
-VERSION = '1.6.2'
-
+VERSION = '1.7.0'
+PLATFORM = sys.platform
 
 class Avalon:
+
+    def __init__(self,logLevel='warning'):
+        logLevel = logLevel.upper()
+        if logLevel == 'DEBUG':
+            self.loglevel = 0
+        elif logLevel == 'INFO':
+            self.loglevel = 1
+        elif logLevel == 'WARNING':
+            self.loglevel = 2
+        elif logLevel == 'ERROR':
+            self.loglevel = 3
+        elif logLevel == 'CRITCAL':
+            self.loglevel = 4
+        elif logLevel == 'NONE':
+            self.loglevel = 5
+        else:
+            raise TypeError("invalid type for positional argument: 'default'")
 
     class FG():
         """
@@ -93,43 +111,66 @@ class Avalon:
         RRV = '\033[27m'  # Reverse
         RHD = '\033[28m'  # Hidden
 
-    def info(msg, log=False):
-        print('{}[+] INFO: {}{}'.format(Avalon.FG.G, str(msg), Avalon.FM.RST))
-        if log and sys.platform != 'win32':
+    def info(self, msg,highlight=False):
+        if highlight == True:
+            style = Avalon.FG.LG + Avalon.FM.BD
+        elif highlight == False:
+            style = Avalon.FG.G + Avalon.FM.BD
+        else:
+            raise TypeError('invalid type for positional argument: \' default\'')
+        print('{}[INFO]{}{}'.format(style, str(msg), Avalon.FM.RST))
+        if self.loglevel <= 1 and PLATFORM != 'win32':
             syslog.syslog(syslog.LOG_INFO, msg)
 
-    def time_info(msg, log=False):
-        import datetime
-        print('{}{}{} [+] INFO: {}{}'.format(Avalon.FM.RST, str(datetime.datetime.now()), Avalon.FG.G, str(msg), Avalon.FM.RST))
-        if log and sys.platform != 'win32':
+    def time_info(self,msg,highlight=False):
+        if highlight == True:
+            style = Avalon.FG.LG + Avalon.FM.BD
+        elif highlight == False:
+            style = Avalon.FG.G + Avalon.FM.BD
+        else:
+            raise TypeError('invalid type for positional argument: \' default\'')
+        print('{}[{}]{}[INFO]{}{}'.format(Avalon.FM.RST, str(datetime.now().time()), style, str(msg), Avalon.FM.RST))
+        if self.loglevel <= 1 and PLATFORM != 'win32':
             syslog.syslog(syslog.LOG_INFO, msg)
 
-    def debug_info(msg, log=True):
-        import datetime
-        print('{}{} [+] INFO: {}{}'.format(Avalon.FG.DGR, str(datetime.datetime.now()), str(msg), Avalon.FM.RST), file=sys.stderr)
-        if log and sys.platform != 'win32':
+    def debug_info(self,msg):
+        print('{}[{}][INFO]{}{}'.format(Avalon.FG.DGR, str(datetime.now().time()), str(msg), Avalon.FM.RST), file=sys.stderr)
+        if self.loglevel <= 0 and PLATFORM != 'win32':
             syslog.syslog(syslog.LOG_DEBUG, msg)
 
-    def warning(msg, log=False):
-        print('{}{}[!] WARNING: {}{}'.format(Avalon.FG.Y, Avalon.FM.BD, str(msg), Avalon.FM.RST), file=sys.stderr)
-        if log and sys.platform != 'win32':
+    def warning(self,msg):
+        print('{}{}[WARNING]{}{}'.format(Avalon.FG.Y, Avalon.FM.BD, str(msg), Avalon.FM.RST), file=sys.stderr)
+        if self.loglevel <= 2 and PLATFORM != 'win32':
             syslog.syslog(syslog.LOG_WARNING, msg)
 
-    def error(msg, log=True):
-        print('{}{}[!] ERROR: {}{}'.format(Avalon.FG.R, Avalon.FM.BD, str(msg), Avalon.FM.RST), file=sys.stderr)
-        if log and sys.platform != 'win32':
+    def error(self,msg):
+        print('{}{}[ERROR]{}{}'.format(Avalon.FG.R, Avalon.FM.BD, str(msg), Avalon.FM.RST), file=sys.stderr)
+        if self.loglevel <= 3 and PLATFORM != 'win32':
             syslog.syslog(syslog.LOG_WARNING, msg)
 
-    def debug(msg, log=True):
-        print('{}{}[*] DBG: {}{}'.format(Avalon.FG.R, Avalon.FM.RDM, str(msg), Avalon.FM.RST), file=sys.stderr)
-        if log and sys.platform != 'win32':
+    def critical(self,msg):
+        print('{}{}{}[CRITICAL]{}{}'.format(Avalon.BG.LR, Avalon.FM.BD, Avalon.FG.W,str(msg), Avalon.FM.RST),file=sys.stderr)
+        if self.loglevel <= 4 and PLATFORM != 'win32':
+            syslog.syslog(syslog.LOG_WARNING, msg)
+
+    def banner(self,msg):
+        from os import get_terminal_size
+        width = get_terminal_size().columns
+        print('{}{}{}{}'.format(Avalon.FG.LR,Avalon.FM.BD,'#'*width,Avalon.FM.RST))
+        print(('\n{}{}{:^%d}{}\n'%width).format(Avalon.FG.R,Avalon.FM.BD,str(msg),Avalon.FM.RST))
+        print('{}{}{}{}'.format(Avalon.FG.LR,Avalon.FM.BD,'#'*width,Avalon.FM.RST))
+        
+
+    def debug(self,msg):
+        print('{}{}[DEBUG]{}{}'.format(Avalon.FG.R, Avalon.FM.RDM, str(msg), Avalon.FM.RST), file=sys.stderr)
+        if self.loglevel <= 0 and PLATFORM != 'win32':
             syslog.syslog(syslog.LOG_DEBUG, msg)
 
-    def gets(msg):
-        print('{}{}[?] USER: {}{}'.format(Avalon.FG.Y, Avalon.FM.BD, msg, Avalon.FM.RST), end='')
+    def gets(self,msg):
+        print('{}{}[USER]:{}{}'.format(Avalon.FG.Y, Avalon.FM.BD, msg, Avalon.FM.RST), end='')
         return input()
 
-    def ask(msg, default=False):
+    def ask(self,msg, default=False):
         """ Gets a True / False answer from user
 
         This method will ask user a question that will
@@ -138,21 +179,21 @@ class Avalon:
         """
         if default is False:
             while True:
-                ans = Avalon.gets(msg + ' [y/N]: ')
+                ans = Avalon.gets(self,msg + ' [y/N]: ')
                 if ans == '' or ans[0].upper() == 'N':
                     return False
                 elif ans[0].upper() == 'Y':
                     return True
                 else:
-                    Avalon.error('Invalid Input!')
+                    Avalon.warning(self,'Invalid Input!')
         elif default is True:
             while True:
-                ans = Avalon.gets(msg + ' [Y/n]: ')
+                ans = Avalon.gets(self,msg + ' [Y/n]: ')
                 if ans == '' or ans[0].upper() == 'Y':
                     return True
                 elif ans[0].upper() == 'N':
                     return False
                 else:
-                    Avalon.error('Invalid Input!')
+                    Avalon.warning(self,'Invalid Input!')
         else:
             raise TypeError('invalid type for positional argument: \' default\'')
