@@ -10,12 +10,12 @@ and foreground colors.
 Name: Avalon Framework
 Author: K4T
 Date Created: March 20, 2017
-Last Modified: October 19, 2018
+Last Modified: March 13, 2019
 
 Licensed under the GNU Lesser General Public License Version 3 (GNU LGPL v3),
     available at: https://www.gnu.org/licenses/lgpl-3.0.txt
 
-(C) 2017 - 2018 K4YT3X
+(C) 2017 - 2019 K4YT3X
 """
 import sys
 
