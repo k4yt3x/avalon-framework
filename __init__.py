@@ -1,35 +1,41 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Avalon generic user I/O framework
-
-Description: this framework tries to make printing messages and
-getting user input easier it includes most UNIX terminal background
-and foreground colors.
-
-Name: Avalon Framework
+Name: Avalon Generic User I/O Framework
 Author: K4YT3X
 Date Created: March 20, 2017
-Last Modified: March 22, 2019
+Last Modified: August 23, 2019
 
 Licensed under the GNU Lesser General Public License Version 3 (GNU LGPL v3),
     available at: https://www.gnu.org/licenses/lgpl-3.0.txt
 
-(C) 2017 - 2019 K4YT3X
+(C) 2017-2019 K4YT3X
+
+Description: this framework tries to make printing messages and
+getting user input easier it includes most UNIX terminal background
+and foreground colors.
 """
+
+# built-in imports
 import sys
 import threading
 
+PLATFORM = sys.platform
+
+# thirt-party imports
 # if system is windows, initialize colorama
-# which translates Unix console color sequences
+# which translates UNIX console color sequences
 # into windows color sequences
-if sys.platform == 'win32':
+if PLATFORM == 'win32':
     from colorama import init
     init()
+
+# if system is UNIX
+# import syslog for writting logs into syslog
 else:
     import syslog
 
-VERSION = '1.7.1'
+VERSION = '1.8.0'
 
 
 class Avalon:
@@ -77,6 +83,7 @@ class Avalon:
         This class contains all background colors.
         Access colors via Avalon.BG.Colors.
         """
+
         BL = '\033[40m'  # Black
         R = '\033[41m'  # Red
         G = '\033[42m'  # Green
@@ -101,6 +108,7 @@ class Avalon:
         sequences, such as bold or italic.
         Access formats via Avalon.FM.Color.
         """
+
         # SET
         BD = '\033[1m'  # Bold
         DM = '\033[2m'  # Dim
@@ -142,64 +150,127 @@ class Avalon:
     @staticmethod
     def info(msg, log=False, file=sys.stdout):
         """ print regular information
+
+        Arguments:
+            msg {str} -- message to print
+
+        Keyword Arguments:
+            log {bool} -- Ture logs message to syslog on Linux (default: {True})
+            file {_io.TextIOWrapper} -- pipe to write output to (default: {sys.stderr})
         """
-        Avalon._print('{}[+] INFO: {}{}'.format(Avalon.FG.G, str(msg), Avalon.FM.RST), file)
-        if log and sys.platform != 'win32':
+        Avalon._print(f'{Avalon.FG.G}[+] INFO: {str(msg)}{Avalon.FM.RST}', file)
+        if log and PLATFORM != 'win32':
             syslog.syslog(syslog.LOG_INFO, msg)
 
     @staticmethod
     def time_info(msg, log=False, file=sys.stdout):
         """ print regular information with time stamp
+
+        Arguments:
+            msg {str} -- message to print
+
+        Keyword Arguments:
+            log {bool} -- Ture logs message to syslog on Linux (default: {True})
+            file {_io.TextIOWrapper} -- pipe to write output to (default: {sys.stderr})
         """
         import datetime
-        Avalon._print('{}{}{} [+] INFO: {}{}'.format(Avalon.FM.RST, str(datetime.datetime.now()), Avalon.FG.G, str(msg), Avalon.FM.RST), file)
-        if log and sys.platform != 'win32':
+        Avalon._print(f'{Avalon.FM.RST}{str(datetime.datetime.now())}{Avalon.FG.G} [+] INFO: {str(msg)}{Avalon.FM.RST}', file)
+        if log and PLATFORM != 'win32':
             syslog.syslog(syslog.LOG_INFO, msg)
 
     @staticmethod
     def debug_info(msg, log=True, file=sys.stderr):
-        """ print information fo debugging
+        """ print information for debugging
+
+        Arguments:
+            msg {str} -- message to print
+
+        Keyword Arguments:
+            log {bool} -- Ture logs message to syslog on Linux (default: {True})
+            file {_io.TextIOWrapper} -- pipe to write output to (default: {sys.stderr})
         """
         import datetime
-        Avalon._print('{}{} [+] INFO: {}{}'.format(Avalon.FG.DGR, str(datetime.datetime.now()), str(msg), Avalon.FM.RST), file)
-        if log and sys.platform != 'win32':
+        Avalon._print(f'{Avalon.FG.DGR}{str(datetime.datetime.now())} [+] INFO: {str(msg)}{Avalon.FM.RST}', file)
+        if log and PLATFORM != 'win32':
             syslog.syslog(syslog.LOG_DEBUG, msg)
 
     @staticmethod
     def warning(msg, log=False, file=sys.stderr):
         """ print a warning message
+
+        Arguments:
+            msg {str} -- message to print
+
+        Keyword Arguments:
+            log {bool} -- Ture logs message to syslog on Linux (default: {True})
+            file {_io.TextIOWrapper} -- pipe to write output to (default: {sys.stderr})
         """
-        Avalon._print('{}{}[!] WARNING: {}{}'.format(Avalon.FG.Y, Avalon.FM.BD, str(msg), Avalon.FM.RST), file)
-        if log and sys.platform != 'win32':
+        Avalon._print(f'{Avalon.FG.Y}{Avalon.FM.BD}[!] WARNING: {str(msg)}{Avalon.FM.RST}', file)
+        if log and PLATFORM != 'win32':
             syslog.syslog(syslog.LOG_WARNING, msg)
 
     @staticmethod
     def error(msg, log=True, file=sys.stderr):
-        """ print an error message
+        """ print an error messages
+
+        Arguments:
+            msg {str} -- message to print
+
+        Keyword Arguments:
+            log {bool} -- Ture logs message to syslog on Linux (default: {True})
+            file {_io.TextIOWrapper} -- pipe to write output to (default: {sys.stderr})
         """
-        Avalon._print('{}{}[!] ERROR: {}{}'.format(Avalon.FG.R, Avalon.FM.BD, str(msg), Avalon.FM.RST), file)
-        if log and sys.platform != 'win32':
+        Avalon._print(f'{Avalon.FG.R}{Avalon.FM.BD}[!] ERROR: {str(msg)}{Avalon.FM.RST}', file)
+        if log and PLATFORM != 'win32':
             syslog.syslog(syslog.LOG_WARNING, msg)
 
     @staticmethod
     def debug(msg, log=True, file=sys.stderr):
         """ print a debug message
+
+        Arguments:
+            msg {str} -- message to print
+
+        Keyword Arguments:
+            log {bool} -- Ture logs message to syslog on Linux (default: {True})
+            file {_io.TextIOWrapper} -- pipe to write output to (default: {sys.stderr})
         """
-        Avalon._print('{}{}[*] DEBUG: {}{}'.format(Avalon.FG.R, Avalon.FM.RDM, str(msg), Avalon.FM.RST), file)
-        if log and sys.platform != 'win32':
+        Avalon._print(f'{Avalon.FG.R}{Avalon.FM.RDM}[*] DEBUG: {str(msg)}{Avalon.FM.RST}', file)
+        if log and PLATFORM != 'win32':
             syslog.syslog(syslog.LOG_DEBUG, msg)
 
     @staticmethod
     def gets(msg, default=None, batch=False, file=sys.stdout):
-        """ Gets user input as a string
+        """ gets user input
+
+        Arguments:
+            msg {str}  message to print
+
+        Keyword Arguments:
+            default {str} -- default value to return (default: {None})
+            batch {bool} -- if True, return default value (default: {False})
+            file {_io.TextIOWrapper} -- pipe to write output to (default: {sys.stderr})
+
+        Returns:
+            str -- user input
         """
 
         # if batch is set, return the default value
         if batch:
             return default
 
-        print('{}{}[?] USER: {}{}'.format(Avalon.FG.Y, Avalon.FM.BD, msg, Avalon.FM.RST), end='', file=file)
-        return input()
+        print(f'{Avalon.FG.Y}{Avalon.FM.BD}[?] USER: {str(msg)}{Avalon.FM.RST}', end='', file=file)
+
+        # get user input
+        user_input = input()
+
+        # if user input is empty and default value is set
+        # return default value
+        # otherwise return empty string
+        if user_input == '' and default is not None:
+            return default
+        else:
+            return user_input
 
     @staticmethod
     def ask(msg, default=False, batch=False):
@@ -214,23 +285,31 @@ class Avalon:
         if batch:
             return default
 
+        # if default value is False
+        # when user gives no input, return False
         elif default is False:
             while True:
-                ans = Avalon.gets(msg + ' [y/N]: ')
-                if ans == '' or ans[0].upper() == 'N':
+                answer = Avalon.gets(f'{str(msg)} [y/N]: ')
+                if answer == '' or answer[0].upper() == 'N':
                     return False
-                elif ans[0].upper() == 'Y':
+                elif answer[0].upper() == 'Y':
                     return True
                 else:
                     Avalon.error('Invalid Input!')
+
+        # if default value is True
+        # when user gives no input, return True
         elif default is True:
             while True:
-                ans = Avalon.gets(msg + ' [Y/n]: ')
-                if ans == '' or ans[0].upper() == 'Y':
+                answer = Avalon.gets(f'{str(msg)} [Y/n]: ')
+                if answer == '' or answer[0].upper() == 'Y':
                     return True
-                elif ans[0].upper() == 'N':
+                elif answer[0].upper() == 'N':
                     return False
                 else:
                     Avalon.error('Invalid Input!')
+
+        # if default is neither True or False
+        # in another word, not isinstance(default, bool)
         else:
             raise TypeError('invalid type for positional argument: \' default\'')
