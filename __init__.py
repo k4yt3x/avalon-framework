@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Name: Avalon Generic User I/O Framework
+Name: Avalon Standard Command Line I/O Framework
 Author: K4YT3X
 Date Created: March 20, 2017
 Last Modified: August 23, 2019
