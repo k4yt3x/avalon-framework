@@ -155,8 +155,8 @@ class Avalon:
             msg {str} -- message to print
 
         Keyword Arguments:
-            log {bool} -- Ture logs message to syslog on Linux (default: {True})
-            file {_io.TextIOWrapper} -- pipe to write output to (default: {sys.stderr})
+            log {bool} -- Ture logs message to syslog on Linux (default: {False})
+            file {_io.TextIOWrapper} -- pipe to write output to (default: {sys.stdout})
         """
         Avalon._print(f'{Avalon.FG.G}[+] INFO: {str(msg)}{Avalon.FM.RST}', file)
         if log and PLATFORM != 'win32':
@@ -170,8 +170,8 @@ class Avalon:
             msg {str} -- message to print
 
         Keyword Arguments:
-            log {bool} -- Ture logs message to syslog on Linux (default: {True})
-            file {_io.TextIOWrapper} -- pipe to write output to (default: {sys.stderr})
+            log {bool} -- Ture logs message to syslog on Linux (default: {False})
+            file {_io.TextIOWrapper} -- pipe to write output to (default: {sys.stdout})
         """
         import datetime
         Avalon._print(f'{Avalon.FM.RST}{str(datetime.datetime.now())}{Avalon.FG.G} [+] INFO: {str(msg)}{Avalon.FM.RST}', file)
@@ -202,7 +202,7 @@ class Avalon:
             msg {str} -- message to print
 
         Keyword Arguments:
-            log {bool} -- Ture logs message to syslog on Linux (default: {True})
+            log {bool} -- Ture logs message to syslog on Linux (default: {False})
             file {_io.TextIOWrapper} -- pipe to write output to (default: {sys.stderr})
         """
         Avalon._print(f'{Avalon.FG.Y}{Avalon.FM.BD}[!] WARNING: {str(msg)}{Avalon.FM.RST}', file)
@@ -244,7 +244,7 @@ class Avalon:
         """ gets user input
 
         Arguments:
-            msg {str}  message to print
+            msg {str} -- message to print
 
         Keyword Arguments:
             default {str} -- default value to return (default: {None})
@@ -274,11 +274,24 @@ class Avalon:
 
     @staticmethod
     def ask(msg, default=False, batch=False):
-        """ Gets a True / False answer from user
+        """ gets a True / False answer from user
 
         This method will ask user a question that will
         require a true / false answer. Pressing enter without
         entering anything will return the default value.
+
+        Arguments:
+            msg {str} -- message to print
+
+        Keyword Arguments:
+            default {bool} -- default value to return when input is blank (default: {False})
+            batch {bool} -- if True, return default value (default: {False})
+
+        Raises:
+            TypeError: raised when default is not bool type
+
+        Returns:
+            bool -- user's answer
         """
 
         # if batch is set, return the default value
