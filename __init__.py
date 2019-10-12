@@ -4,7 +4,7 @@
 Name: Avalon Standard Command Line I/O Framework
 Author: K4YT3X
 Date Created: March 20, 2017
-Last Modified: August 23, 2019
+Last Modified: October 12, 2019
 
 Licensed under the GNU Lesser General Public License Version 3 (GNU LGPL v3),
     available at: https://www.gnu.org/licenses/lgpl-3.0.txt
@@ -35,7 +35,7 @@ if PLATFORM == 'win32':
 else:
     import syslog
 
-VERSION = '1.8.0'
+VERSION = '1.8.2'
 
 
 class Avalon:
@@ -125,6 +125,10 @@ class Avalon:
         RBL = '\033[25m'  # Blink
         RRV = '\033[27m'  # Reverse
         RHD = '\033[28m'  # Hidden
+
+    @staticmethod
+    def get_version():
+        return VERSION
 
     @staticmethod
     def _print(msg, file):
@@ -268,6 +272,7 @@ class Avalon:
         # return default value
         # otherwise return empty string
         if user_input == '' and default is not None:
+            print()
             return default
         else:
             return user_input
@@ -303,7 +308,10 @@ class Avalon:
         elif default is False:
             while True:
                 answer = Avalon.gets(f'{str(msg)} [y/N]: ')
-                if answer == '' or answer[0].upper() == 'N':
+                if answer == '':
+                    print()
+                    return False
+                elif answer[0].upper() == 'N':
                     return False
                 elif answer[0].upper() == 'Y':
                     return True
@@ -315,7 +323,10 @@ class Avalon:
         elif default is True:
             while True:
                 answer = Avalon.gets(f'{str(msg)} [Y/n]: ')
-                if answer == '' or answer[0].upper() == 'Y':
+                if answer == '':
+                    print()
+                    return True
+                elif answer[0].upper() == 'Y':
                     return True
                 elif answer[0].upper() == 'N':
                     return False
